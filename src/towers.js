@@ -21,7 +21,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-const { Benchmark } = require('./benchmark');
 
 class TowersDisk {
   constructor(size) {
@@ -30,9 +29,8 @@ class TowersDisk {
   }
 }
 
-class Towers extends Benchmark {
+class Towers {
   constructor() {
-    super();
     this.piles = null;
     this.movesDone = 0;
   }
@@ -40,6 +38,7 @@ class Towers extends Benchmark {
   benchmark() {
     this.piles = new Array(3);
     this.buildTowerAt(0, 13);
+    console.log(this.piles)
     this.movesDone = 0;
     this.moveDisks(13, 0, 1);
     return this.movesDone;
@@ -93,4 +92,5 @@ class Towers extends Benchmark {
   }
 }
 
-exports.newInstance = () => new Towers();
+new Towers().benchmark()
+//exports.newInstance = () => new Towers();
