@@ -96,7 +96,7 @@ const miniRun = () => {
 }
 
 const normalRun = () => {
-  for (let i = 0; i < 10; i++) {  //FIXME what amount of iterations?
+  for (let i = 0; i < 100; i++) {  //FIXME what amount of iterations?
     new Towers().benchmark()
   }
 }

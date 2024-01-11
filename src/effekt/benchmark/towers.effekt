@@ -1,42 +1,10 @@
 import mutable/array
 import src/benchmark
 import immutable/list
+import src/effekt/cliRunner
 
 //each list represents one smallerDisk.
-//TODO type alias, rename as "smallerDisk"
-//smallerDisk.next is the smallerDisk below => kellerstack
 type Disk = List[Int]
-
-
-// def printPiles(piles: Array[Disk]) = {
-//   println(pilesToString(piles))
-// }
-
-// def DiskToString(d: Disk): String = {
-//   "Disk("++helper(d)++")"
-// }
-
-// def helper(d: Disk): String = {
-//   d match {
-//     case Cons(size, next) => ""++show(size)++" " ++ helper(next)
-//     case Nil() => ""
-//   }
-// }
-
-// def assert(myBool: Boolean, s: String) = {
-//   if (not(myBool)) {
-//     panic("assertion failed:"++s)
-//   }
-// }
-
-// def pilesToString(piles: Array[Disk]): String = {
-//   var s = "["
-//   each(0, piles.size()){ i =>
-//     s = s ++ "\n\t" ++ DiskToString(piles.unsafeGet(i))
-//   }
-//   s = s ++ "]"
-//   s
-// }
 
 def Towers() = {
 
@@ -114,46 +82,6 @@ def Towers() = {
     return result == 8191;
   }
 
-  // def unitTest() = {
-  //   //init pile array
-  //   piles = emptyArray(3)
-  //   put[Disk](piles,0,Nil())
-  //   put[Disk](piles,1,Nil())
-  //   put[Disk](piles,2,Nil())
-
-  //   buildTowerAt(0, 3);
-  //   buildTowerAt(1, 4);
-  //   buildTowerAt(2, 5);
-
-  //   val popped = popDiskFrom(1)
-  //   assert(diskSize(popped) == 0,"popped correct disk")
-  //   assert(diskSize(piles.unsafeGet(1)) == 1,"remaining disk has correct size"++pilesToString(piles))
-    
-  //   popDiskFrom(0)
-  //   popDiskFrom(0)
-  //   popDiskFrom(0)
-  //   popDiskFrom(0)
-  //   assert(piles.unsafeGet(0)==Nil(),"pile was popped empty")
-    
-
-  //   moveTopDisk(2,1)
-  //   assert(diskSize(piles.unsafeGet(2))==1,"")
-  //   assert(diskSize(piles.unsafeGet(1))==0,"")
-
-  //   moveTopDisk(1,0)
-  //   assert(diskSize(piles.unsafeGet(1))==1,"")
-  //   assert(diskSize(piles.unsafeGet(0))==0,"")
-
-  //   put[Disk](piles,0,Nil())
-  //   put[Disk](piles,1,Nil())
-  //   put[Disk](piles,2,Nil())
-  //   buildTowerAt(0, 13);
-
-  //   printPiles(piles)
-  //   moveDisks(13,0,1);
-  //   printPiles(piles)
-  // }
-
   innerBenchmarkLoop(1){benchmark}{verifyResult}
 }
 
@@ -164,7 +92,16 @@ def diskSize(d: Disk): Int = {
   }
 }
 
+def miniRun() = {
+  Towers()
+}
+
+def normalRun() = {
+  each(0,100){ i => 
+    Towers()
+  }
+}
 
 def main() = {
-  Towers()
+  println(runFromCli{ miniRun }{ normalRun })
 }
