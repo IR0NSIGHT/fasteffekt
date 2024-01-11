@@ -20,7 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
+const { runFromCli } = require("./cliRunner")
 
 class TowersDisk {
   constructor(size) {
@@ -38,7 +38,6 @@ class Towers {
   benchmark() {
     this.piles = new Array(3);
     this.buildTowerAt(0, 13);
-    console.log(this.piles)
     this.movesDone = 0;
     this.moveDisks(13, 0, 1);
     return this.movesDone;
@@ -89,9 +88,20 @@ class Towers {
       this.moveTopDisk(fromPile, toPile);
       this.moveDisks(disks - 1, otherPile, toPile);
     }
-    console.log(this.piles)
   }
 }
 
-new Towers().benchmark()
-//exports.newInstance = () => new Towers();
+const miniRun = () => {
+  new Towers().benchmark()
+}
+
+const normalRun = () => {
+  for (let i = 0; i < 10; i++) {  //FIXME what amount of iterations?
+    new Towers().benchmark()
+  }
+}
+
+const main = () => {
+  console.log(runFromCli(miniRun, normalRun))
+}
+main()
