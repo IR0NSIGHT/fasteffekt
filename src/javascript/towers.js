@@ -89,6 +89,7 @@ class Towers {
       this.moveTopDisk(fromPile, toPile);
       this.moveDisks(disks - 1, otherPile, toPile);
     }
+    console.log(this.piles)
   }
 }
 
