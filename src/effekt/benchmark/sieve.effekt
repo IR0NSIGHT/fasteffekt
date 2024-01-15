@@ -1,3 +1,48 @@
+import mutable/array
+import src/effekt/cliRunner
+import src/effekt/benchmark
+
+def Sieve() = {
+  def sieve(flags: Array[Boolean], size: Int): Int = {
+    var primeCount: Int = 0;
+    each(2, size){ i =>
+      if (flags.unsafeGet(i - 1)) {
+        primeCount = primeCount + 1;
+        var k = i + i;
+        while (k <= size) {
+          put(flags, (k - 1), false);
+          k = k + i;
+        }
+      }
+    }
+    return primeCount;
+  }
+
+  def benchmark() = {
+    val flags: Array[Boolean] = fill[Boolean](5000, true);
+      return sieve(flags, 5000);
+    }
+
+  def  verifyResult(result: Int) = {
+      return 669 == result;
+  }
+
+  return innerBenchmarkLoop(1){benchmark}{verifyResult}
+
+}
+
+
+
+def miniRun() = {
+  Sieve()
+}
+
+def normalRun() = {
+  each(0,150){ i =>
+    Sieve()
+  }
+}
+
 def main() = {
-  println("[-1]")
+  println(runFromCli{ miniRun }{ normalRun })
 }
