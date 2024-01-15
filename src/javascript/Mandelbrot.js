@@ -117,8 +117,6 @@ class Mandelbrot {
   }
 }
 
-exports.newInstance = () => new Mandelbrot();
-
 const miniRun = () => {
   new Mandelbrot().innerBenchmarkLoop(1)
 }
