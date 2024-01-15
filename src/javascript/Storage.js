@@ -55,7 +55,8 @@ class Storage {
 
 
 const miniRun = () => {
-  new Storage().benchmark()
+  const myS = new Storage();
+  myS.verifyResult(myS.benchmark())
 }
 
 const normalRun = () => {
