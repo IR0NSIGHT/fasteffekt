@@ -1,3 +1,69 @@
+import mutable/array
+import immutable/list
+import src/effekt/benchmark
+import src/effekt/cliRunner
+
+type Tree {
+  Leaf(arr: Array[Int])
+  Node(i0: Tree, i1: Tree, i2: Tree, i3: Tree)
+}
+
+interface Random {
+  def next(): Int
+}
+
+def bitAnd(x: Int, y: Int) = mod(x,(y+1)) 
+
+def Storage() = {
+  var count = 0;
+
+  def withRandom[R]{ program: { Random } => R}: R = {
+    var seed = 74755;
+    def rand = new Random {
+      def next() = {
+      seed = bitAnd((seed * 1309) + 13849, 65535);
+      seed;
+      }
+    }
+    program{rand}
+  }
+
+  def buildTreeDepth(depth: Int){ rand: Random}: Tree = {
+    count = count + 1;
+    if (depth == 1) {
+      return Leaf(emptyArray[Int](mod(rand.next(),10) + 1))
+    } else {
+      val arr = emptyArray[Tree](4);
+      each(0,4) { i =>
+        put(arr,i,buildTreeDepth(depth - 1){ rand });
+      }
+      return Node(arr.unsafeGet(0),arr.unsafeGet(1),arr.unsafeGet(2),arr.unsafeGet(3))
+    }
+
+  }
+
+  def benchmark() = {
+    count = 0;
+    withRandom{ { rand: Random } => buildTreeDepth(7){ rand };}
+    return count;
+  }  
+  
+
+  def verifyResult(result: Int) = {
+    return 5461 == result;
+  }
+
+  innerBenchmarkLoop(1){benchmark}{verifyResult}
+}
+
+def miniRun() = {
+  Storage();
+}
+
+def normalRun() = {
+  Storage();
+}
+
 def main() = {
-  println("[-1]")
+  println(runFromCli{ miniRun }{ normalRun })
 }
