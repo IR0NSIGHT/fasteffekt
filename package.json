@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "./src/javascript/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test:effekt": "./run_benches.sh"
+    "test": "./src/javascript/index.js --small"
   },
   "repository": {
     "type": "git",
