@@ -1,0 +1,102 @@
+import src/effekt/benchmark
+import src/effekt/cliRunner
+import mutable/array
+
+type Return[T] {
+  Continue()
+  BreakWith(value: T)
+}
+
+def loopWithReturn[T](from: Int, to: Int, finally: T){ fnc: Int => Return[T] } : T = {
+  if (from == to) {
+    finally
+  } else {
+    val fncVal = fnc(from);
+    val output: T = fncVal match {
+      case BreakWith(value) => value //early return
+      case Continue() => loopWithReturn(from+1,to, finally){ fnc };
+    }
+    output
+  }
+}
+
+def Queens() = {
+  var freeMaxs = emptyArray[Boolean]();
+  var freeRows = emptyArray[Boolean]();
+  var freeMins = emptyArray[Boolean]();
+  var queenRows = emptyArray[Int]();
+
+  def getRowColumn(r: Int, c: Int) = {
+    return freeRows.unsafeGet(r) && freeMaxs.unsafeGet(c + r) && freeMins.unsafeGet(c - r + 7);
+  }
+
+  def setRowColumn(r: Int, c: Int, v: Boolean) = {
+    put(freeRows,r, v);
+    put(freeMaxs,c + r, v);
+    put(freeMins,c - r + 7, v);
+  }
+
+  def placeQueen(c: Int): Boolean = {
+    def iterate(r: Int): Return[Boolean] = {
+      if (getRowColumn(r, c)) {
+        put(queenRows,r, c);
+        setRowColumn(r, c, false);
+
+        if (c == 7 || placeQueen(c + 1)) {
+          BreakWith(true);
+        } else {
+          setRowColumn(r, c, true);
+          Continue()
+        };
+      } else {
+        Continue()
+      }
+    }
+    return loopWithReturn[Boolean](0, 8, false){ iterate }
+  }
+
+  def queens() = {
+    freeRows = fill(8,true);
+    freeMaxs = fill(16,true);
+    freeMins = fill(16,true);
+    queenRows = fill(8,-1);
+
+    return placeQueen(0);
+  }
+
+  def benchmark() = {
+    var result = true;
+    each(0,10){ i =>
+      result = result && queens();
+    }
+    return result;
+  }
+
+  def verifyResult(result: Boolean) = {
+    return result;
+  }
+
+  innerBenchmarkLoop(1){benchmark}{verifyResult}
+}
+
+def miniRun() = {
+  Queens();
+}
+
+def normalRun() = {
+  Queens();
+}
+
+def main() = {
+  //def it(i: Int): Return[Int] = {
+  //  println("it: "++show(i)++" => Return")
+  //  if (i == 12) {
+  //  } else {
+  //    Continue()
+  //  }
+  //}
+  //println(loopWithReturn[Int](0,30,13){ it })
+  //println(loopWithReturn[Int](0,30,13){ i => Continue() })
+
+  println(runFromCli{ miniRun }{ normalRun })
+}
