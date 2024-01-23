@@ -2,9 +2,9 @@
 import src/effekt/benchmark
 import src/effekt/cliRunner
 
-extern pure def xor(a: Int, b: Int): Int = "a ^ b"
+extern pure def xor(a: Int, b: Int): Int = "(bitwise-xor a b)"
 
-extern pure def lshift(a: Int, b: Int): Int = "a << b"
+extern pure def lshift(a: Int, b: Int): Int = "(bitwise-arithmetic-shift a b)"
 
 def Mandelbrot(size: Int) = {
   def mandelbrot(size: Int): Int = {
