@@ -2,6 +2,7 @@ import io/args
 import text/string
 import immutable/list
 
+extern pure def currentTimeNanos(): Int = "(time-nanosecond (current-time))"
 
 def measureMillis{ operation: () => Unit }: Int = {
     val startTime : Int = currentTimeNanos();
@@ -23,7 +24,7 @@ def runFromCli{ miniBench: () => Unit }{ bench: () =>Unit }: String = {
 
     val iterations: Int = commandLineArgs() match {
       case Cons(its,_) => its.unsafeToInt() //FIXME compiler doesnt choose correct overload for "toInt"
-      case _ => panic("cli runner was not given cmd arg for iterations!")
+      case _ => 3//panic("cli runner was not given cmd arg for iterations!")
     }
 
     var durationLog: List[Int] = Nil()
