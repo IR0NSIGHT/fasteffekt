@@ -1,6 +1,8 @@
 module examples/fasteffekt/benchmark
-
-def innerBenchmarkLoop[T](iterations: Int){benchmark: ()=>T}{verifyResult: T => Boolean} = {
+extern io def panic[R](msg: String): R = 
+"  call void @c_io_println_String(%Pos %msg) call void @exit(i64 1)"
+  
+def innerBenchmarkLoop(iterations: Int){benchmark: ()=>Int}{verifyResult: Int => Boolean} = {
     each(0, iterations) {
         i =>
         val res = benchmark();
