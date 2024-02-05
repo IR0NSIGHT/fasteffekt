@@ -2,6 +2,10 @@ import src/effekt/benchmark
 import immutable/list
 import src/effekt/cliRunner
 
+extern io def panic[R](msg: String): R = 
+"  call void @c_io_println_String(%Pos %msg) call void @exit(i64 1)"
+  
+  
 def length(element: List[Int]): Int =
   element match {
     case Nil() => 0
