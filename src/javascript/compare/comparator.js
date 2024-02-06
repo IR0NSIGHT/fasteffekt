@@ -95,6 +95,7 @@ function executeCommands(commands, isVerify, backend, verbose) {
         const outputFile = "fasteffekt_error.txt"
         fs.writeFileSync(outputFile, errorlog);
         console.error("error occured: not all benchmarks returned readable values. See " + outputFile + " for detailed errors.")
+        process.exit(1);
     }
 }
 

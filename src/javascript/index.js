@@ -4,7 +4,8 @@ const {verify} = require('crypto');
 const path = require('path');
 const runAll = require("./compare/comparator")
 
-const knownBackends = ["js", "chez-lift", "llvm", "ml"];
+const knownBackends = ["js", "chez-lift", "chez-monadic","chez-callcc","llvm", "ml"];
+
 const passedArguments = {
     help: false,
     backend: "js",
