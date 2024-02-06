@@ -20,9 +20,11 @@ def runFromCli{ miniBench: () => Unit }{ bench: () =>Unit }: String = {
       case Cons(_,Cons(arg,_)) => (arg == "--verify") 
       case _ => false
     }
-
     val iterations: Int = commandLineArgs() match {
-      case Cons(its,_) => its.unsafeToInt() //FIXME compiler doesnt choose correct overload for "toInt"
+      case Cons(its,_) => toInt(its) match {
+        case None() => println("illegal value for iterations, default to 3"); 3
+        case Some(i) => i
+      }
       case _ => panic("cli runner was not given cmd arg for iterations!")
     }
 
