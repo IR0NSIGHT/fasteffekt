@@ -27,7 +27,7 @@ def Queens() = {
   var queenRows = emptyArray[Int]();
 
   def getRowColumn(r: Int, c: Int) = {
-    return freeRows.unsafeGet(r) && freeMaxs.unsafeGet(c + r) && freeMins.unsafeGet(c - r + 7);
+    freeRows.unsafeGet(r) && freeMaxs.unsafeGet(c + r) && freeMins.unsafeGet(c - r + 7);
   }
 
   def setRowColumn(r: Int, c: Int, v: Boolean) = {
