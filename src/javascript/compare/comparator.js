@@ -9,23 +9,15 @@ const fs = require('fs');
 
 // List of shell commands
 const commands = [
-<<<<<<< HEAD
   ['permute', 'src/effekt/benchmark/permute.effekt', 'node src/javascript/Permute.js'],
   ["nbody", "src/effekt/benchmark/nbody.effekt", "node src/javascript/Nbody.js"],
   ['list', 'src/effekt/benchmark/list.effekt', 'node src/javascript/List.js'],
   ["mandelbrot", "src/effekt/benchmark/mandelbrot.effekt", "node src/javascript/Mandelbrot.js"],
   ["bounce","src/effekt/benchmark/bounce.effekt","node src/javascript/bounce.js"],
-  ["queens","src/effekt/benchmark/queens.effekt","node src/javascript/queens.js"]
+  ["queens","src/effekt/benchmark/queens.effekt","node src/javascript/queens.js"],
+  ["sieve","src/effekt/benchmark/sieve.effekt", "node src/javascript/Sieve.js"],
+
   // Add more commands as needed
-  
-=======
-    ['permute', 'src/effekt/benchmark/permute.effekt', 'node src/javascript/Permute.js'],
-    ["nbody", "src/effekt/benchmark/nbody.effekt", "node src/javascript/Nbody.js"],
-    ['list', 'src/effekt/benchmark/list.effekt', 'node src/javascript/List.js'],
-    ["mandelbrot", "src/effekt/benchmark/mandelbrot.effekt", "node src/javascript/Mandelbrot.js"],
-    ["bounce", "src/effekt/benchmark/bounce.effekt", "node src/javascript/bounce.js"]
-    // Add more commands as needed
->>>>>>> 76321a09 (add backend selection to fasteffekt, add verbose logging flag, refactor commandline app)
 ];
 
 /**
