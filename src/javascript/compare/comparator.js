@@ -14,7 +14,6 @@ const commands = [
   ['list', 'src/effekt/benchmark/list.effekt', 'node src/javascript/List.js'],
   ["mandelbrot", "src/effekt/benchmark/mandelbrot.effekt", "node src/javascript/Mandelbrot.js"],
   ["bounce","src/effekt/benchmark/bounce.effekt","node src/javascript/bounce.js"],
-  ["queens","src/effekt/benchmark/queens.effekt","node src/javascript/queens.js"],
   ["sieve","src/effekt/benchmark/sieve.effekt", "node src/javascript/Sieve.js"],
   ["storage","src/effekt/benchmark/storage.effekt","node src/javascript/Storage.js"],
   ["queens","src/effekt/benchmark/queens.effekt","node src/javascript/queens.js"]
