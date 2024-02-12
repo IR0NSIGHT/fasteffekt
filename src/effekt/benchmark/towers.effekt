@@ -14,9 +14,9 @@ def Towers() = {
 
   def pushDisk(piles: TowerSetup, smallerDisk: SingleDisk, pileIdx: Int): StackOfDisks = {
     val currentTopDisk: StackOfDisks = piles.unsafeGet(pileIdx);
-    (smallerDisk, currentTopDisk) match {
-      case (smallerSize, Cons(largerSize,_)) => 
-        if (smallerSize >= largerSize) {
+    currentTopDisk match {
+      case Cons(largerSize,_) => 
+        if (smallerDisk >= largerSize) {
           panic("Cannot put a big smallerDisk on a smaller one:"++show(piles));
         }
     }
