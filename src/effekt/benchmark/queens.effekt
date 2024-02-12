@@ -61,7 +61,7 @@ def Queens() = {
     freeMins = fill(16,true);
     queenRows = fill(8,-1);
 
-    return placeQueen(0);
+    placeQueen(0);
   }
 
   def benchmark() = {
