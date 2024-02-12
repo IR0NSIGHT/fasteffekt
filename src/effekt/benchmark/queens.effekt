@@ -27,7 +27,7 @@ def Queens() = {
   var queenRows = emptyArray[Int]();
 
   def getRowColumn(r: Int, c: Int) = {
-    return freeRows.unsafeGet(r) && freeMaxs.unsafeGet(c + r) && freeMins.unsafeGet(c - r + 7);
+    freeRows.unsafeGet(r) && freeMaxs.unsafeGet(c + r) && freeMins.unsafeGet(c - r + 7);
   }
 
   def setRowColumn(r: Int, c: Int, v: Boolean) = {
@@ -52,7 +52,7 @@ def Queens() = {
         Continue()
       }
     }
-    return loopWithReturn[Boolean](0, 8, false){ iterate }
+    loopWithReturn[Boolean](0, 8, false){ iterate }
   }
 
   def queens() = {
@@ -61,7 +61,7 @@ def Queens() = {
     freeMins = fill(16,true);
     queenRows = fill(8,-1);
 
-    return placeQueen(0);
+    placeQueen(0);
   }
 
   def benchmark() = {
@@ -73,7 +73,7 @@ def Queens() = {
   }
 
   def verifyResult(result: Boolean) = {
-    return result;
+    result
   }
 
   innerBenchmarkLoop(1){benchmark}{verifyResult}
