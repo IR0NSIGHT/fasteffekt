@@ -41,11 +41,14 @@ def Queens() = {
         put(queenRows,r, c);
         setRowColumn(r, c, false);
 
-        if (c == 7 || placeQueen(c + 1)) {
+        if (c == 7) {
           do returnValue(true);
-        } else {
-          setRowColumn(r, c, true);
-        };
+        }
+
+        if (placeQueen(c + 1)) {
+          do returnValue(true);          
+        } 
+        setRowColumn(r, c, true);
       }
     }
     breakableLoop[Boolean](0, 8, false){ iterate }
