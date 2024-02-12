@@ -3,7 +3,6 @@ import src/effekt/benchmark
 import immutable/list
 import src/effekt/cliRunner
 
-//each list represents one smallerDisk.
 type SingleDisk = Int
 type StackOfDisks = List[SingleDisk]
 type TowerSetup = Array[StackOfDisks]
@@ -12,29 +11,25 @@ def Towers() = {
   var piles: TowerSetup = emptyArray[StackOfDisks](0);
   var movesDone: Int = 0;
 
-  def pushDisk(piles: TowerSetup, smallerDisk: SingleDisk, pileIdx: Int): StackOfDisks = {
-    val currentTopDisk: StackOfDisks = piles.unsafeGet(pileIdx);
-    currentTopDisk match {
-      case Cons(largerSize,_) => 
-        if (smallerDisk >= largerSize) {
-          panic("Cannot put a big smallerDisk on a smaller one:"++show(piles));
+  def pushDisk(piles: TowerSetup, newTopDiskOnStack: SingleDisk, pileIdx: Int): Unit = {
+    val stack: StackOfDisks = piles.unsafeGet(pileIdx);
+    stack match {
+      case Cons(topDiskOnStack,_) => 
+        if (newTopDiskOnStack >= topDiskOnStack) {
+          panic("Cannot put a big disk onto a smaller one:"++show(piles));
         }
     }
 
     //push current top disk one down, put smaller on top
-    val replacer = smallerDisk match { //smallerDisk.next = currentTopDisk
-      case smallerSize => 
-        Cons(smallerSize, currentTopDisk)
-    }
-    put(piles,pileIdx, replacer);
-    return currentTopDisk 
+    val updatedStack = Cons(newTopDiskOnStack, stack)
+    put(piles,pileIdx, updatedStack);
   }
 
   def popDiskFrom(pileIdx: Int): SingleDisk = {
     val currentTopDisk = piles.unsafeGet(pileIdx);
     
     currentTopDisk match {
-      case Nil() => panic("Attempting to remove a smallerDisk from an empty pileIdx");
+      case Nil() => panic("Attempting to remove a newTopDiskOnStack from an empty pileIdx");
       case Cons(size, next) => 
       put(piles, pileIdx, next)
       return size
