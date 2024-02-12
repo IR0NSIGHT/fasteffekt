@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Benchmarking for the Effekt language",
   "main": "index.js",
-  "minimumEffekt": "cbff76e875c7ce4aca5e52fd8ef170c1f66b97e9",
+  "minimumEffekt": "d8a1fba426511663c97386eedc00b244744fa6e4",
   "scripts": {
     "start": "./src/javascript/index.js",
     "test": "./src/javascript/index.js --small"
