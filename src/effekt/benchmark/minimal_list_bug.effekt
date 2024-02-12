@@ -1,0 +1,39 @@
+
+def getItemAt[A](l: List[A], idx: Int): Option[A] =
+  l match {
+    case Nil() => None()  //idx out of bounds
+    case Cons(a, rest) => 
+      if (idx == 0) { //list[idx] == a
+        Some(a)
+      } else {
+        getItemAt(rest,idx - 1)
+      }
+  }
+
+def setItemAt[A](l: List[A], item: A, idx: Int): List[A] =
+  l match {
+    case Nil() => panic("index out of bounds for setting item to list")
+    case Cons(head, tail) => 
+      if (idx == 0) {
+        Cons(item, tail)  //replace existing head with item
+      } else {
+        Cons(head, setItemAt(tail, item, idx - 1))
+      }
+  }
+
+def Assert(cond: Boolean, mssg: String) : Unit = {
+  if (not(cond))
+    panic("Assertion failed: "++ mssg); 
+}
+def main() = {
+  var myList: List[String] = Cons[String]("A",Cons("B",Nil()));
+  val a: Option[String] = getItemAt(myList, 0);
+  a match {
+    case Some(aa) => Assert(aa == "A","idx 0 failed");
+    case None() => panic("didnt find stuff");
+  }
+
+  val updatedList = setItemAt(myList, "X", 0);
+  Assert(updatedList == Cons("X",Cons("B",Nil())),"setting item did not work")
+  ();
+}
