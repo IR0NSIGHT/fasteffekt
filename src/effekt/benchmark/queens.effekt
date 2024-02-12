@@ -2,21 +2,20 @@ import src/effekt/benchmark
 import src/effekt/cliRunner
 import mutable/array
 
-type Return[T] {
-  Continue()
-  BreakWith(value: T)
+interface Break[T] {
+  def returnValue(result: T): Nothing
 }
 
-def loopWithReturn[T](from: Int, to: Int, finally: T){ fnc: Int => Return[T] } : T = {
+def breakableLoop[T](from: Int, to: Int, finally: T){ fnc: Int => Unit / Break[T] } : T = {
   if (from == to) {
     finally
   } else {
-    val fncVal = fnc(from);
-    val output: T = fncVal match {
-      case BreakWith(value) => value //early return
-      case Continue() => loopWithReturn(from+1,to, finally){ fnc };
+    try {
+      fnc(from);
+      breakableLoop(from+1, to, finally){ fnc };
+    } with Break[T] {
+      def returnValue(value) = value
     }
-    output
   }
 }
 
@@ -37,22 +36,19 @@ def Queens() = {
   }
 
   def placeQueen(c: Int): Boolean = {
-    def iterate(r: Int): Return[Boolean] = {
+    def iterate(r: Int): Unit / Break[Boolean] = {
       if (getRowColumn(r, c)) {
         put(queenRows,r, c);
         setRowColumn(r, c, false);
 
         if (c == 7 || placeQueen(c + 1)) {
-          BreakWith(true);
+          do returnValue(true);
         } else {
           setRowColumn(r, c, true);
-          Continue()
         };
-      } else {
-        Continue()
       }
     }
-    loopWithReturn[Boolean](0, 8, false){ iterate }
+    breakableLoop[Boolean](0, 8, false){ iterate }
   }
 
   def queens() = {
@@ -88,15 +84,12 @@ def normalRun() = {
 }
 
 def main() = {
-  //def it(i: Int): Return[Int] = {
-  //  println("it: "++show(i)++" => Return")
+  //def it(i: Int): Unit / Break[Int] = {
   //  if (i == 12) {
-  //  } else {
-  //    Continue()
+  //    do returnValue(4);
   //  }
   //}
-  //println(loopWithReturn[Int](0,30,13){ it })
-  //println(loopWithReturn[Int](0,30,13){ i => Continue() })
-
+  //println(  breakableLoop(0,13,-1){ it })
+ 
   println(runFromCli{ miniRun }{ normalRun })
 }
