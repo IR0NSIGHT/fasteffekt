@@ -16,6 +16,7 @@ const commands = [
   ["bounce","src/effekt/benchmark/bounce.effekt","node src/javascript/bounce.js"],
   ["sieve","src/effekt/benchmark/sieve.effekt", "node src/javascript/Sieve.js"],
   ["storage","src/effekt/benchmark/storage.effekt","node src/javascript/Storage.js"],
+  ["queens","src/effekt/benchmark/queens.effekt","node src/javascript/queens.js"]
   // Add more commands as needed
 ];
 
