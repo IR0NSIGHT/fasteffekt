@@ -20,7 +20,7 @@ jobs:
         run: |
           git clone https://github.com/effekt-lang/effekt.git &&
           cd effekt &&
-          git checkout cbff76e875c7ce4aca5e52fd8ef170c1f66b97e9
+          git checkout d8a1fba426511663c97386eedc00b244744fa6e4
 
       - name: Set up submodule
         run: |
