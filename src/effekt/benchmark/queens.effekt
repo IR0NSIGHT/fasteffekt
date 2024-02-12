@@ -52,7 +52,7 @@ def Queens() = {
         Continue()
       }
     }
-    return loopWithReturn[Boolean](0, 8, false){ iterate }
+    loopWithReturn[Boolean](0, 8, false){ iterate }
   }
 
   def queens() = {
