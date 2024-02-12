@@ -4,17 +4,18 @@ import immutable/list
 import src/effekt/cliRunner
 
 //each list represents one smallerDisk.
-type Disk = List[Int]
-
+type SingleDisk = Int
+type StackOfDisks = List[SingleDisk]
+type TowerSetup = Array[StackOfDisks]
 def Towers() = {
 
-  var piles: Array[Disk] = emptyArray();
+  var piles: TowerSetup = emptyArray[StackOfDisks](0);
   var movesDone: Int = 0;
 
-  def pushDisk(piles: Array[Disk], smallerDisk: Disk, pileIdx: Int): Disk = {
-    val currentTopDisk: Disk = piles.unsafeGet(pileIdx);
+  def pushDisk(piles: TowerSetup, smallerDisk: SingleDisk, pileIdx: Int): StackOfDisks = {
+    val currentTopDisk: StackOfDisks = piles.unsafeGet(pileIdx);
     (smallerDisk, currentTopDisk) match {
-      case (Cons(smallerSize,_), Cons(largerSize,_)) => 
+      case (smallerSize, Cons(largerSize,_)) => 
         if (smallerSize >= largerSize) {
           panic("Cannot put a big smallerDisk on a smaller one:"++show(piles));
         }
@@ -22,22 +23,21 @@ def Towers() = {
 
     //push current top disk one down, put smaller on top
     val replacer = smallerDisk match { //smallerDisk.next = currentTopDisk
-      case Cons(smallerSize, next) => 
+      case smallerSize => 
         Cons(smallerSize, currentTopDisk)
-      case Nil() => panic("tried putting nothing on top of stack")
     }
     put(piles,pileIdx, replacer);
     return currentTopDisk 
   }
 
-  def popDiskFrom(pileIdx: Int): Disk = {
+  def popDiskFrom(pileIdx: Int): SingleDisk = {
     val currentTopDisk = piles.unsafeGet(pileIdx);
     
     currentTopDisk match {
       case Nil() => panic("Attempting to remove a smallerDisk from an empty pileIdx");
       case Cons(size, next) => 
       put(piles, pileIdx, next)
-      return Cons(size, Nil())
+      return size
     }
   }
 
@@ -49,7 +49,7 @@ def Towers() = {
   def buildTowerAt(pileIdx: Int, disks: Int) = {
     var i = disks;
     while (i >= 0) {
-      pushDisk(piles, Cons(i,Nil()), pileIdx);
+      pushDisk(piles, i, pileIdx);
       i = i -1;
     }
   }
@@ -67,9 +67,9 @@ def Towers() = {
 
   def benchmark(): Int = {
     piles = emptyArray(3)
-    put[Disk](piles,0,Nil())
-    put[Disk](piles,1,Nil())
-    put[Disk](piles,2,Nil())
+    put[StackOfDisks](piles,0,Nil())
+    put[StackOfDisks](piles,1,Nil())
+    put[StackOfDisks](piles,2,Nil())
 
     buildTowerAt(0, 13);
 
@@ -85,7 +85,7 @@ def Towers() = {
   innerBenchmarkLoop(1){benchmark}{verifyResult}
 }
 
-def diskSize(d: Disk): Int = {
+def diskSize(d: StackOfDisks): Int = {
   d match {
     case Cons(s,_) => s
     case Nil() => -1
