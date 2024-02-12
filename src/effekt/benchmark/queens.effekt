@@ -1,0 +1,98 @@
+import src/effekt/benchmark
+import src/effekt/cliRunner
+import mutable/array
+
+interface Break[T] {
+  def returnValue(result: T): Nothing
+}
+
+def breakableLoop[T](from: Int, to: Int, finally: T){ fnc: Int => Unit / Break[T] } : T = {
+  if (from == to) {
+    finally
+  } else {
+    try {
+      fnc(from);
+      breakableLoop(from+1, to, finally){ fnc };
+    } with Break[T] {
+      def returnValue(value) = value
+    }
+  }
+}
+
+def Queens() = {
+  var freeMaxs = emptyArray[Boolean]();
+  var freeRows = emptyArray[Boolean]();
+  var freeMins = emptyArray[Boolean]();
+  var queenRows = emptyArray[Int]();
+
+  def getRowColumn(r: Int, c: Int) = {
+    freeRows.unsafeGet(r) && freeMaxs.unsafeGet(c + r) && freeMins.unsafeGet(c - r + 7);
+  }
+
+  def setRowColumn(r: Int, c: Int, v: Boolean) = {
+    put(freeRows,r, v);
+    put(freeMaxs,c + r, v);
+    put(freeMins,c - r + 7, v);
+  }
+
+  def placeQueen(c: Int): Boolean = {
+    def iterate(r: Int): Unit / Break[Boolean] = {
+      if (getRowColumn(r, c)) {
+        put(queenRows,r, c);
+        setRowColumn(r, c, false);
+
+        if (c == 7) {
+          do returnValue(true);
+        }
+
+        if (placeQueen(c + 1)) {
+          do returnValue(true);          
+        } 
+        setRowColumn(r, c, true);
+      }
+    }
+    breakableLoop[Boolean](0, 8, false){ iterate }
+  }
+
+  def queens() = {
+    freeRows = fill(8,true);
+    freeMaxs = fill(16,true);
+    freeMins = fill(16,true);
+    queenRows = fill(8,-1);
+
+    placeQueen(0);
+  }
+
+  def benchmark() = {
+    var result = true;
+    each(0,10){ i =>
+      result = result && queens();
+    }
+    return result;
+  }
+
+  def verifyResult(result: Boolean) = {
+    result
+  }
+
+  innerBenchmarkLoop(1){benchmark}{verifyResult}
+}
+
+def miniRun() = {
+  Queens();
+}
+
+def normalRun() = {
+  Queens();
+}
+
+def main() = {
+  //def it(i: Int): Unit / Break[Int] = {
+  //  if (i == 12) {
+  //    do returnValue(4);
+  //  }
+  //}
+  //println(  breakableLoop(0,13,-1){ it })
+ 
+  println(runFromCli{ miniRun }{ normalRun })
+}
