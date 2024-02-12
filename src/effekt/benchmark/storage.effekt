@@ -33,13 +33,12 @@ def Storage() = {
     if (depth == 1) {
       Leaf(emptyArray[Int](mod(rand.next(),10) + 1))
     } else {
-      val arr = emptyArray[Tree](4);
-      each(0,4) { i =>
-        put(arr,i,buildTreeDepth(depth - 1){ rand });
-      }
-      return Node(arr.unsafeGet(0),arr.unsafeGet(1),arr.unsafeGet(2),arr.unsafeGet(3))
+      return Node(
+        buildTreeDepth(depth - 1){ rand },
+        buildTreeDepth(depth - 1){ rand },
+        buildTreeDepth(depth - 1){ rand },
+        buildTreeDepth(depth - 1){ rand })
     }
-
   }
 
   def benchmark() = {
