@@ -5,46 +5,74 @@ import src/effekt/cliRunner
 
 type SingleDisk = Int
 type StackOfDisks = List[SingleDisk]
-type TowerSetup = Array[StackOfDisks]
-def Towers() = {
+type TowerSetup = List[StackOfDisks]
 
-  var piles: TowerSetup = emptyArray[StackOfDisks](0);
-  var movesDone: Int = 0;
 
-  def pushDisk(piles: TowerSetup, newTopDiskOnStack: SingleDisk, pileIdx: Int): Unit = {
-    val stack: StackOfDisks = piles.unsafeGet(pileIdx);
-    stack match {
-      case Cons(topDiskOnStack,_) => 
-        if (newTopDiskOnStack >= topDiskOnStack) {
-          panic("Cannot put a big disk onto a smaller one:"++show(piles));
-        }
-    }
-
-    //push current top disk one down, put smaller on top
-    val updatedStack = Cons(newTopDiskOnStack, stack)
-    put(piles,pileIdx, updatedStack);
+def getItemAt[A](l: List[A], idx: Int): Option[A] =
+  l match {
+    case Nil() => None()  //idx out of bounds
+    case Cons(a, rest) => 
+      if (idx == 0) { //list[idx] == a
+        Some(a)
+      } else {
+        getItemAt(rest,idx - 1)
+      }
   }
 
-  def popDiskFrom(pileIdx: Int): SingleDisk = {
-    val currentTopDisk = piles.unsafeGet(pileIdx);
+def setItemAt[A](l: List[A], item: A, idx: Int): List[A] =
+  l match {
+    case Nil() => panic("index out of bounds for setting item to list")
+    case Cons(head, tail) => 
+      if (idx == 0) {
+        Cons(item, tail)  //replace existing head with item
+      } else {
+        Cons(head, setItemAt(tail, item, idx - 1))
+      }
+  }
+
+def Towers() = {
+
+  var towers: TowerSetup = Nil();
+  var movesDone: Int = 0;
+
+  def pushDisk(towers: TowerSetup, newTopDiskOnStack: SingleDisk, pileIdx: Int): TowerSetup = {
+    val stack: Option[StackOfDisks] = getItemAt[StackOfDisks](towers, pileIdx);
+    stack match {
+      case Some(Cons(topDiskOnStack,rest)) => 
+        if (newTopDiskOnStack >= topDiskOnStack) {
+          panic("Cannot put a big disk onto a smaller one:"++show(towers));
+        }
+
+      //push current top disk one down, put smaller on top
+      val updatedStack = Cons(newTopDiskOnStack, Cons(topDiskOnStack,rest))
+      return setItemAt(towers,updatedStack, pileIdx);
+
+      case None() =>
+        panic("Index out of bounds: towers="++show(towers) ++ " i="++ show(pileIdx));
+      } 
+  }
+
+  def popDiskFrom(pileIdx: Int, towers: TowerSetup): (TowerSetup, SingleDisk) = {
+    val currentTopDisk = getItemAt(towers,pileIdx);
     
     currentTopDisk match {
-      case Nil() => panic("Attempting to remove a newTopDiskOnStack from an empty pileIdx");
-      case Cons(size, next) => 
-      put(piles, pileIdx, next)
-      return size
+      case None() => panic("Attempting to remove a disk from an invalid pileIdx");
+      case Some(Cons(currentTopDisk, restOfStack)) => 
+        val updatedTowers = setItemAt(towers, restOfStack, pileIdx)
+        return (updatedTowers, currentTopDisk)
     }
   }
 
   def moveTopDisk(fromPile: Int, toPile: Int) = {
-    pushDisk(piles, popDiskFrom(fromPile), toPile);
+    val (poppedPiles, disk) = popDiskFrom(fromPile, towers);
+    towers = pushDisk(poppedPiles, disk, toPile);
     movesDone = movesDone + 1;
   }
 
   def buildTowerAt(pileIdx: Int, disks: Int) = {
     var i = disks;
     while (i >= 0) {
-      pushDisk(piles, i, pileIdx);
+      towers = pushDisk(towers, i, pileIdx);
       i = i -1;
     }
   }
@@ -61,10 +89,7 @@ def Towers() = {
   }
 
   def benchmark(): Int = {
-    piles = emptyArray(3)
-    put[StackOfDisks](piles,0,Nil())
-    put[StackOfDisks](piles,1,Nil())
-    put[StackOfDisks](piles,2,Nil())
+    towers = Cons(Nil(), Cons(Nil(), Cons(Nil(), Nil())))
 
     buildTowerAt(0, 13);
 
