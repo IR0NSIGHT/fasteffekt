@@ -26,13 +26,21 @@ const commands = [
  * @param {*} command shell command as string to execute
  * @param {*} onOutput (commandOutput) => Void callback function
  */
-const execute = (command, onOutput) => {
-    const output = execSync(command, {encoding: 'utf8'});
-    onOutput(output.trim())
+const execute = (command, onOutput, onError) => {
+    try {
+        const output = execSync(command, {encoding: 'utf8'});
+        onOutput(output.trim())
+    } catch (error) {
+        onError(error)
+    }
 }
 
-function effektCommand(backend, effektFile, amount, verifyArgs, name) {
-    return `effekt.sh -b ${effektFile} --backend ${backend} && ./out/${name} ${amount} ${verifyArgs}`
+function effektBuildCommand(backend, effektFile) {
+    return `effekt.sh -b ${effektFile} --backend ${backend}`;
+}
+
+function effektCommand(amount, verifyArgs, executableName) {
+    return `./out/${executableName} ${amount} ${verifyArgs}`
 }
 
 function executeCommands(commands, isVerify, backend, verbose) {
@@ -47,16 +55,22 @@ function executeCommands(commands, isVerify, backend, verbose) {
         const verifyArgs = isVerify ? "--verify" : ""
 
         const [executableName, effektPath, jsCmd] = command
-        const effektCmd = [dirtyCd, effektCommand(backend, effektPath, amount, verifyArgs, executableName)].join(" && ")
+        const effektCmd = [dirtyCd, effektCommand(amount, verifyArgs, executableName)].join(" && ")
         if (verbose)
             console.log(effektCmd);
-        try {
-            performance.command = effektCmd;
-            execute(effektCmd, (time) => performance.effekt = time)
-        } catch (error) {
+
+        performance.command = effektCmd;
+        const onRuntimeError = (error) => {
             console.error(`benchmark ${executableName} execution crashed in effekt. log in output file`)
-            performance.effekt = error;
+            performance.effekt = { error: "runtime error", status: error.status, output: error.output.join("\n")};
         }
+        const runEffekt = () =>  execute(effektCmd, (time) => performance.effekt = time, onRuntimeError)
+        const onCompileError = (error) => {
+            console.error(`benchmark ${executableName} compilation failed. log in output file`)
+            performance.effekt = { error: "compile error", status: error.status, output: error.output.join("\n")};
+        }
+        execute([dirtyCd, effektBuildCommand(backend, effektPath)].join(" && "), runEffekt, onCompileError );
+
         // run pure JS benchmark
         const jsExecCmd = [dirtyCd, jsCmd + ` ${amount} ${verifyArgs}`].join(" && ");
         if (verbose)
@@ -83,7 +97,13 @@ function executeCommands(commands, isVerify, backend, verbose) {
         fs.writeFileSync(outputFile, JSON.stringify(analysis, null, 3));
     } catch {
         let analysis = outputs
-            .map(mark => ([mark.command, mark.effekt].join("\n")))
+            .map(mark => {
+                const loggedErrorForBenchmark = [mark.command,
+                    "error:",mark.effekt.error,
+                    "status:", mark.effekt.status,
+                    "output:", mark.effekt.output];
+                return (loggedErrorForBenchmark.join("\n"))
+            });
         const errorlog = analysis.join("\n\n");
         const outputFile = "fasteffekt_error.txt"
         fs.writeFileSync(outputFile, errorlog);
