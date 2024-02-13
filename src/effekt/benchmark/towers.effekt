@@ -1,0 +1,102 @@
+import mutable/array
+import src/effekt/benchmark
+import immutable/list
+import src/effekt/cliRunner
+
+type SingleDisk = Int
+type StackOfDisks = List[SingleDisk]
+type TowerSetup = Array[StackOfDisks]
+def Towers() = {
+
+  var piles: TowerSetup = emptyArray[StackOfDisks](0);
+  var movesDone: Int = 0;
+
+  def pushDisk(piles: TowerSetup, newTopDiskOnStack: SingleDisk, pileIdx: Int): Unit = {
+    val stack: StackOfDisks = piles.unsafeGet(pileIdx);
+    stack match {
+      case Cons(topDiskOnStack,_) => 
+        if (newTopDiskOnStack >= topDiskOnStack) {
+          panic("Cannot put a big disk onto a smaller one:"++show(piles));
+        }
+    }
+
+    //push current top disk one down, put smaller on top
+    val updatedStack = Cons(newTopDiskOnStack, stack)
+    put(piles,pileIdx, updatedStack);
+  }
+
+  def popDiskFrom(pileIdx: Int): SingleDisk = {
+    val currentTopDisk = piles.unsafeGet(pileIdx);
+    
+    currentTopDisk match {
+      case Nil() => panic("Attempting to remove a newTopDiskOnStack from an empty pileIdx");
+      case Cons(size, next) => 
+      put(piles, pileIdx, next)
+      return size
+    }
+  }
+
+  def moveTopDisk(fromPile: Int, toPile: Int) = {
+    pushDisk(piles, popDiskFrom(fromPile), toPile);
+    movesDone = movesDone + 1;
+  }
+
+  def buildTowerAt(pileIdx: Int, disks: Int) = {
+    var i = disks;
+    while (i >= 0) {
+      pushDisk(piles, i, pileIdx);
+      i = i -1;
+    }
+  }
+
+  def moveDisks(disks: Int, fromPile: Int, toPile: Int): Unit = {
+    if (disks == 1) {
+      moveTopDisk(fromPile, toPile);
+    } else {
+      val otherPile = (3 - fromPile) - toPile;
+      moveDisks(disks - 1, fromPile, otherPile);
+      moveTopDisk(fromPile, toPile);
+      moveDisks(disks - 1, otherPile, toPile);
+    }
+  }
+
+  def benchmark(): Int = {
+    piles = emptyArray(3)
+    put[StackOfDisks](piles,0,Nil())
+    put[StackOfDisks](piles,1,Nil())
+    put[StackOfDisks](piles,2,Nil())
+
+    buildTowerAt(0, 13);
+
+    movesDone = 0;
+    moveDisks(13, 0, 1);
+    return movesDone;
+  }
+
+  def verifyResult(result: Int): Boolean = {
+    return result == 8191;
+  }
+
+  innerBenchmarkLoop(1){benchmark}{verifyResult}
+}
+
+def diskSize(d: StackOfDisks): Int = {
+  d match {
+    case Cons(s,_) => s
+    case Nil() => -1
+  }
+}
+
+def miniRun() = {
+  Towers()
+}
+
+def normalRun() = {
+  each(0,100){ i => 
+    Towers()
+  }
+}
+
+def main() = {
+  println(runFromCli{ miniRun }{ normalRun })
+}
