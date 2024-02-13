@@ -68,11 +68,14 @@ def Queens() = {
     each(0,10){ i =>
       result = result && queens();
     }
-    return result;
+    return if (result) 
+      0
+    else
+      1;
   }
 
-  def verifyResult(result: Boolean) = {
-    result
+  def verifyResult(result: Int) = {
+    result == 0
   }
 
   innerBenchmarkLoop(1){benchmark}{verifyResult}

@@ -175,20 +175,23 @@ def nbody(problemSize: Int) = {
     e
   }
 
-  def benchmark(): Double = {
+  val resultMultiplier: Double = 1000000000.0;
+
+  def benchmark(): Int = {
     val bodies: Array[Body] = createBodies();
     each(0, problemSize) { i => 
       advance(0.01, bodies)
  
     }
-    energy(bodies)
+    toInt(energy(bodies) * resultMultiplier)
   }
 
-  def verifyResult(result: Double): Boolean = {
+
+  def verifyResult(result: Int): Boolean = {
      if (problemSize == 250000) {
-       (result - 0.1690859889909308) < 0.0000000000000001;
+       (toDouble(result) - (0.1690859889909308 * resultMultiplier)) < 1.0;
       } else if (problemSize == 1) {
-        result == -0.16907495402506745;
+        (toDouble(result) - (0.16907495402506745 * resultMultiplier)) < 1.0;
       }  else {
         false
       }
@@ -197,7 +200,7 @@ def nbody(problemSize: Int) = {
   //benchmark()
   //problem sized loop happens in benchmark itself.
   //not my choice ¯\_(ツ)_/¯
-  innerBenchmarkLoop[Double](1){benchmark}{verifyResult}
+  innerBenchmarkLoop(1){benchmark}{verifyResult}
 }
 
 def miniRun() = {
