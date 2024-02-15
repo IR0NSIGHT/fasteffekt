@@ -76,7 +76,7 @@ def Bounce(iterations: Int) = {
   def runBenchdef(){ rand: Random }: Int = {
      val ballCount = 100;
     var bounces = 0;
-    val balls = emptyArray[Ball]()
+    val balls = emptyArray[Ball](ballCount)
     each(0, ballCount){ i => 
       val rBall = randomBall(){ rand }
       put(balls, i, rBall)
