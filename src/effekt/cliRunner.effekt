@@ -22,10 +22,10 @@ def runFromCli{ miniBench: () => Unit }{ bench: () =>Unit }: String = {
     }
     val iterations: Int = commandLineArgs() match {
       case Cons(its,_) => toInt(its) match {
-        case None() => println("illegal value for iterations, default to 3"); 3
+        case None() => 3
         case Some(i) => i
       }
-      case _ => panic("cli runner was not given cmd arg for iterations!")
+      case _ => 3
     }
 
     var durationLog: List[Int] = Nil()
