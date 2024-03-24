@@ -1,0 +1,298 @@
+[
+   {
+      "backend": "effekt-javascript",
+      "filename": "fasteffekt500_js.json",
+      "benchmarks": [
+         {
+            "name": "permute",
+            "geomean": 4.559238417965237,
+            "standardDeviation": 16.506534080014166,
+            "min": 70,
+            "max": 191,
+            "median": 92
+         },
+         {
+            "name": "nbody",
+            "geomean": 7.758467132816789,
+            "standardDeviation": 62.14385596072498,
+            "min": 2197,
+            "max": 2670,
+            "median": 2336
+         },
+         {
+            "name": "list",
+            "geomean": 2.2884114409157097,
+            "standardDeviation": 1.22030089262324,
+            "min": 6,
+            "max": 17,
+            "median": 10
+         },
+         {
+            "name": "mandelbrot",
+            "geomean": 8.81586914893017,
+            "standardDeviation": 52.21516299402871,
+            "min": 6670,
+            "max": 7301,
+            "median": 6735
+         },
+         {
+            "name": "bounce",
+            "geomean": 1.7060932168576484,
+            "standardDeviation": 1.2393853929688727,
+            "min": 3,
+            "max": 22,
+            "median": 6
+         },
+         {
+            "name": "towers",
+            "geomean": 6.22803381694062,
+            "standardDeviation": 17.27346662655174,
+            "min": 390,
+            "max": 611,
+            "median": 507
+         },
+         {
+            "name": "sieve",
+            "geomean": 6.043268389710819,
+            "standardDeviation": 2.976311957058841,
+            "min": 416,
+            "max": 448,
+            "median": 420
+         },
+         {
+            "name": "storage",
+            "geomean": 0.13852520410971111,
+            "standardDeviation": 0.8430762451345815,
+            "min": 0,
+            "max": 8,
+            "median": 1
+         },
+         {
+            "name": "queens",
+            "geomean": 0.6333157427814833,
+            "standardDeviation": 0.8843574935243692,
+            "min": 1,
+            "max": 9,
+            "median": 2
+         }
+      ]
+   },
+   {
+      "backend": "effekt-chez-monadic",
+      "filename": "fasteffekt500_monadic.json",
+      "benchmarks": [
+         {
+            "name": "permute",
+            "geomean": 3.386122496159454,
+            "standardDeviation": 1.493558647951174,
+            "min": 27,
+            "max": 38,
+            "median": 29
+         },
+         {
+            "name": "nbody",
+            "geomean": 7.838521302928177,
+            "standardDeviation": 23.474592925672898,
+            "min": 2476,
+            "max": 2638,
+            "median": 2544
+         },
+         {
+            "name": "list",
+            "geomean": 0.0013862943611198907,
+            "standardDeviation": 0.06330889378329184,
+            "min": 0,
+            "max": 2,
+            "median": 1
+         },
+         {
+            "name": "mandelbrot",
+            "geomean": 8.603088749668085,
+            "standardDeviation": 48.95112428880749,
+            "min": 5299,
+            "max": 5521,
+            "median": 5464
+         },
+         {
+            "name": "bounce",
+            "geomean": 0.3188477030575754,
+            "standardDeviation": 0.5109580768640664,
+            "min": 1,
+            "max": 4,
+            "median": 1
+         },
+         {
+            "name": "sieve",
+            "geomean": 5.366978387866981,
+            "standardDeviation": 0.7710597033513472,
+            "min": 213,
+            "max": 217,
+            "median": 214
+         },
+         {
+            "name": "storage",
+            "geomean": 0,
+            "standardDeviation": 0.044721359549995794,
+            "min": 0,
+            "max": 1,
+            "median": 0
+         },
+         {
+            "name": "queens",
+            "geomean": 0.00358351893845611,
+            "standardDeviation": 0.09991980752519364,
+            "min": 1,
+            "max": 3,
+            "median": 1
+         }
+      ]
+   },
+   {
+      "backend": "effekt-chez-callcc",
+      "filename": "fasteffekt500_callcc.json",
+      "benchmarks": [
+         {
+            "name": "permute",
+            "geomean": 1.1027283779920294,
+            "standardDeviation": 0.8414225953514298,
+            "min": 2,
+            "max": 6,
+            "median": 3
+         },
+         {
+            "name": "nbody",
+            "geomean": 6.344170867869629,
+            "standardDeviation": 9.572918339308133,
+            "min": 540,
+            "max": 605,
+            "median": 570
+         },
+         {
+            "name": "list",
+            "geomean": 0.2852368403171071,
+            "standardDeviation": 0.5158179293825939,
+            "min": 0,
+            "max": 3,
+            "median": 1
+         },
+         {
+            "name": "mandelbrot",
+            "geomean": 6.477027835726594,
+            "standardDeviation": 4.938406597217242,
+            "min": 644,
+            "max": 724,
+            "median": 649
+         },
+         {
+            "name": "bounce",
+            "geomean": 0,
+            "standardDeviation": 0,
+            "min": 0,
+            "max": 0,
+            "median": 0
+         },
+         {
+            "name": "towers",
+            "geomean": 1.9627191293033728,
+            "standardDeviation": 1.0946105904336023,
+            "min": 7,
+            "max": 17,
+            "median": 7
+         },
+         {
+            "name": "sieve",
+            "geomean": 2.306225636459214,
+            "standardDeviation": 0.38016450399820334,
+            "min": 10,
+            "max": 16,
+            "median": 10
+         },
+         {
+            "name": "storage",
+            "geomean": 0,
+            "standardDeviation": 0.044721359549995794,
+            "min": 0,
+            "max": 1,
+            "median": 0
+         },
+         {
+            "name": "queens",
+            "geomean": 0,
+            "standardDeviation": 0,
+            "min": 0,
+            "max": 0,
+            "median": 0
+         }
+      ]
+   },
+   {
+      "backend": "effekt-chez-lift",
+      "filename": "fasteffekt500_lift.json",
+      "benchmarks": [
+         {
+            "name": "permute",
+            "geomean": 3.663066529846857,
+            "standardDeviation": 0.3191860891690573,
+            "min": 38,
+            "max": 41,
+            "median": 39
+         },
+         {
+            "name": "nbody",
+            "geomean": 7.577015911910542,
+            "standardDeviation": 12.386873911144047,
+            "min": 1902,
+            "max": 2081,
+            "median": 1953
+         },
+         {
+            "name": "list",
+            "geomean": 0,
+            "standardDeviation": 0,
+            "min": 0,
+            "max": 0,
+            "median": 0
+         },
+         {
+            "name": "mandelbrot",
+            "geomean": 8.25856869874839,
+            "standardDeviation": 5.200718310184068,
+            "min": 3851,
+            "max": 3904,
+            "median": 3860
+         },
+         {
+            "name": "bounce",
+            "geomean": 0.0013862943611198907,
+            "standardDeviation": 0.09991980752519364,
+            "min": 0,
+            "max": 2,
+            "median": 0
+         },
+         {
+            "name": "sieve",
+            "geomean": 4.800777291786873,
+            "standardDeviation": 0.5170092815360159,
+            "min": 121,
+            "max": 124,
+            "median": 122
+         },
+         {
+            "name": "storage",
+            "geomean": 0,
+            "standardDeviation": 0,
+            "min": 0,
+            "max": 0,
+            "median": 0
+         },
+         {
+            "name": "queens",
+            "geomean": 2.306307963221031,
+            "standardDeviation": 0.25005009518134624,
+            "min": 10,
+            "max": 14,
+            "median": 10
+         }
+      ]
+   }
+]
