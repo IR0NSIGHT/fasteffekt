@@ -24,5 +24,10 @@
   "bugs": {
     "url": "https://github.com/IR0NSIGHT/fasteffekt/issues"
   },
-  "homepage": "https://github.com/IR0NSIGHT/fasteffekt#readme"
+  "homepage": "https://github.com/IR0NSIGHT/fasteffekt#readme",
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "chart.js": "2.8.0",
+    "chartjs-chart-box-and-violin-plot": "^4.0.0"
+  }
 }
