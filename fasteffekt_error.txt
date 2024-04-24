@@ -1,0 +1,106 @@
+cd C:\Users\Max1M\Documents\Repos\fasteffekt\src\javascript\compare && cd ../../.. && ./out/permute 10 
+error:
+compile error
+status:
+1
+output:
+
+
+Der Befehl "rm" ist entweder falsch geschrieben oder
+konnte nicht gefunden werden.
+
+
+cd C:\Users\Max1M\Documents\Repos\fasteffekt\src\javascript\compare && cd ../../.. && ./out/nbody 10 
+error:
+compile error
+status:
+1
+output:
+
+
+Der Befehl "rm" ist entweder falsch geschrieben oder
+konnte nicht gefunden werden.
+
+
+cd C:\Users\Max1M\Documents\Repos\fasteffekt\src\javascript\compare && cd ../../.. && ./out/list 10 
+error:
+compile error
+status:
+1
+output:
+
+
+Der Befehl "rm" ist entweder falsch geschrieben oder
+konnte nicht gefunden werden.
+
+
+cd C:\Users\Max1M\Documents\Repos\fasteffekt\src\javascript\compare && cd ../../.. && ./out/mandelbrot 10 
+error:
+compile error
+status:
+1
+output:
+
+
+Der Befehl "rm" ist entweder falsch geschrieben oder
+konnte nicht gefunden werden.
+
+
+cd C:\Users\Max1M\Documents\Repos\fasteffekt\src\javascript\compare && cd ../../.. && ./out/bounce 10 
+error:
+compile error
+status:
+1
+output:
+
+
+Der Befehl "rm" ist entweder falsch geschrieben oder
+konnte nicht gefunden werden.
+
+
+cd C:\Users\Max1M\Documents\Repos\fasteffekt\src\javascript\compare && cd ../../.. && ./out/towers 10 
+error:
+compile error
+status:
+1
+output:
+
+
+Der Befehl "rm" ist entweder falsch geschrieben oder
+konnte nicht gefunden werden.
+
+
+cd C:\Users\Max1M\Documents\Repos\fasteffekt\src\javascript\compare && cd ../../.. && ./out/sieve 10 
+error:
+compile error
+status:
+1
+output:
+
+
+Der Befehl "rm" ist entweder falsch geschrieben oder
+konnte nicht gefunden werden.
+
+
+cd C:\Users\Max1M\Documents\Repos\fasteffekt\src\javascript\compare && cd ../../.. && ./out/storage 10 
+error:
+compile error
+status:
+1
+output:
+
+
+Der Befehl "rm" ist entweder falsch geschrieben oder
+konnte nicht gefunden werden.
+
+
+cd C:\Users\Max1M\Documents\Repos\fasteffekt\src\javascript\compare && cd ../../.. && ./out/queens 10 
+error:
+compile error
+status:
+1
+output:
+
+
+Der Befehl "rm" ist entweder falsch geschrieben oder
+konnte nicht gefunden werden.
