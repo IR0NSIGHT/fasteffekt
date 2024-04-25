@@ -16,7 +16,7 @@ def Towers() = {
     stack match {
       case Cons(topDiskOnStack,_) => 
         if (newTopDiskOnStack >= topDiskOnStack) {
-          panic("Cannot put a big disk onto a smaller one:"++show(piles));
+          panic("Cannot put a big disk onto a smaller one");
         }
     }
 

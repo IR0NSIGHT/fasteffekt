@@ -59,7 +59,7 @@ def bounce(ball: Ball): Tuple2[Ball, Boolean] = {
 def bitAnd(x: Int, y: Int) = mod(x,(y+1)) 
 
 def withRandom[R]{ program: { Random } => R}: R = {
-  var seed = 74755;   //FIXME is mutable from everywhere, use "withRandom" with block
+  var seed = 74755;
   def rand = new Random {
     def next() = {
     seed = bitAnd((seed * 1309) + 13849, 65535);
@@ -76,7 +76,7 @@ def Bounce(iterations: Int) = {
   def runBenchdef(){ rand: Random }: Int = {
      val ballCount = 100;
     var bounces = 0;
-    val balls = emptyArray[Ball]()
+    val balls = emptyArray[Ball](ballCount)
     each(0, ballCount){ i => 
       val rBall = randomBall(){ rand }
       put(balls, i, rBall)
